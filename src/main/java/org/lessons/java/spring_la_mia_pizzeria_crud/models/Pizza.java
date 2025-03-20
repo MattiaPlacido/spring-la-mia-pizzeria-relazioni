@@ -1,11 +1,14 @@
 package org.lessons.java.spring_la_mia_pizzeria_crud.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -40,7 +43,10 @@ public class Pizza {
 	@DecimalMin(value = "0.1", message = "Price must be greater than 0.")
 	private Double price;
 
-	// Getters and setters
+	@OneToMany(mappedBy = "pizza")
+	private List<SpecialOffer> specialOffers;
+
+	// Methods
 	public String getDescription() {
 		return this.description;
 	}
@@ -79,6 +85,14 @@ public class Pizza {
 
 	public void setName(String value) {
 		this.name = value;
+	}
+
+	public List<SpecialOffer> getSpecialOffers() {
+		return this.specialOffers;
+	}
+
+	public void setSpecialOffers(List<SpecialOffer> specialOffers) {
+		this.specialOffers = specialOffers;
 	}
 
 	@Override
