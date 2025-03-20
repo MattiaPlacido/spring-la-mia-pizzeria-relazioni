@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link th:replace="~{ fragments :: bootstrap}">
+    <title>Pizzas Show</title>
+</head>
+
+<body>
+    <link th:replace="~{ fragments :: navbar}">
+
+
+    <div class="container mt-3 p-2 border border-solid border-black">
+
+        <h1 class="text-center">[[${pizza.name}]] : [[${pizza.price}]]$</h1>
+        <br>
+        <p scope="col" class="text-center fs-4">[[${pizza.description}]]</p>
+
+    </div>
+</body>
+<link th:replace="~{ fragments :: scripts}">
+
+</html>
