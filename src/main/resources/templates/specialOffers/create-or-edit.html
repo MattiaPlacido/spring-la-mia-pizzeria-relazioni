@@ -15,7 +15,9 @@
 
         <h1 class="text-center">Add a new special offer!</h1>
 
-        <form id="specialoffer-form" th:action="@{/specialOffers/create}" method="post" th:object="${specialOffer}">
+        <form id="specialoffer-form"
+            th:action="${edit} ? @{/specialOffers/edit/{id}(id = ${specialOffer.id})} : @{/specialOffers/create}"
+            method="post" th:object="${specialOffer}">
 
             <input type="hidden" th:field="*{pizza}" id="linked-pizza">
             <div class="mb-3">
@@ -38,8 +40,8 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="startingDate">Starting Date : </label>
-                <input class="form-control" type="date" id="startingDate" th:field="*{startingDate}"
+                <label class="form-label" for="starting-date">Starting Date : </label>
+                <input class="form-control" type="date" id="starting-date" th:field="*{startingDate}"
                     th:errorClass="is-invalid">
                 <div th:if="${#fields.hasErrors('startingDate')}" class="invalid-feedback">
                     <ul>
@@ -48,8 +50,8 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="endingDate">Ending Date : </label>
-                <input class="form-control" type="date" id="endingDate" th:field="*{endingDate}"
+                <label class="form-label" for="ending-date">Ending Date : </label>
+                <input class="form-control" type="date" id="ending-date" th:field="*{endingDate}"
                     th:errorClass="is-invalid">
                 <div th:if="${#fields.hasErrors('endingDate')}" class="invalid-feedback">
                     <ul>

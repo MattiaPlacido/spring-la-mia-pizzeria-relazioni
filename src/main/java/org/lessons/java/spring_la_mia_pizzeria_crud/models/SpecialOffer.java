@@ -51,7 +51,6 @@ public class SpecialOffer {
     private Pizza pizza;
 
     // Methods
-    // Ricordarsi di catchare nel controller l'exception
     @PrePersist
     @PreUpdate
     public void validateDates() {

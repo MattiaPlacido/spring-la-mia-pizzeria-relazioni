@@ -6,6 +6,7 @@ import org.lessons.java.spring_la_mia_pizzeria_crud.repos.PizzaRepository;
 import org.lessons.java.spring_la_mia_pizzeria_crud.repos.SpecialOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,6 +15,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequestMapping("/specialOffers")
@@ -32,6 +34,25 @@ public class SpecialOfferController {
         repo.save(newOffer);
 
         return "redirect:/pizzas/" + newOffer.getPizza().getId();
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        model.addAttribute("specialOffer", repo.findById(id).get());
+        model.addAttribute("edit", true);
+
+        return "specialOffers/create-or-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute("specialOffer") SpecialOffer updatedOffer, BindingResult result) {
+        if (result.hasErrors()) {
+            return "specialOffers/create-or-edit";
+        }
+
+        repo.save(updatedOffer);
+
+        return "redirect:/pizzas/" + updatedOffer.getPizza().getId();
     }
 
     @PostMapping("/delete/{id}")

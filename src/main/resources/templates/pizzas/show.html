@@ -17,10 +17,11 @@
         <p scope="col" class="text-center fs-4">[[${pizza.description}]]</p>
         <hr>
         <div class="d-flex justify-content-center m-3">
-            <a class="btn btn-secondary" th:href="@{/pizzas/{id}/newoffer(id=${pizza.id})}">Add offer for
+            <a class="btn btn-secondary" th:href="@{/pizzas/{id}/newoffer(id=${pizza.id})}">Add an offer for
                 current pizza</a>
         </div>
         <div th:if="${pizza.specialOffers.size() > 0}">
+            <p class="fw-bold text-center mt-3 fs-5">Available offers!</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -38,7 +39,8 @@
                         <td>[[*{startingDate}]]</td>
                         <td>[[*{endingDate}]]</td>
                         <td>[[*{Description}]]</td>
-                        <td class="d-flex gap-2"><button class="btn btn-success btn-sm">Update</button>
+                        <td class="d-flex gap-2">
+                            <a class="btn btn-success btn-sm" th:href="@{/specialOffers/edit/{id}(id=*{id})}">Update</a>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 th:data-bs-target="'#delete-modal-' + *{id}">
                                 Delete
