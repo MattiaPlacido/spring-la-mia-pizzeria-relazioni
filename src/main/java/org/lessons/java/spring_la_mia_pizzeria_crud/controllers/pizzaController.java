@@ -1,6 +1,7 @@
 package org.lessons.java.spring_la_mia_pizzeria_crud.controllers;
 
 import org.lessons.java.spring_la_mia_pizzeria_crud.repos.PizzaRepository;
+import org.lessons.java.spring_la_mia_pizzeria_crud.repos.SpecialOfferRepository;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class PizzaController {
 
     @Autowired
     private PizzaRepository repo;
+
+    @Autowired
+    private SpecialOfferRepository offersRepo;
 
     @GetMapping("")
     public String index(@RequestParam(name = "search", required = false) String search, Model model) {
@@ -84,8 +88,13 @@ public class PizzaController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
+        Pizza toRemovePizza = repo.findById(id).get();
 
-        repo.deleteById(id);
+        for (SpecialOffer offer : toRemovePizza.getSpecialOffers()) {
+            offersRepo.delete(offer);
+        }
+
+        repo.delete(toRemovePizza);
 
         return "redirect:/pizzas";
     }
