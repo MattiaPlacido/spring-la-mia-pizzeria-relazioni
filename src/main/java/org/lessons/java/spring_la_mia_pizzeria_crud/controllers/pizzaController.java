@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/pizzas")
-public class pizzaController {
+public class PizzaController {
 
     @Autowired
     private PizzaRepository repo;
@@ -98,7 +98,7 @@ public class pizzaController {
 
         model.addAttribute("specialOffer", specialOffer);
 
-        return "specialOffers/create";
+        return "specialOffers/create-or-edit";
     }
 
 }
