@@ -2,12 +2,14 @@ package org.lessons.java.spring_la_mia_pizzeria_crud.models;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
@@ -26,25 +28,25 @@ public class Pizza {
 
 	@NotBlank(message = "The name must not be null, empty or blank.")
 	@Size(max = 30, message = "The name must not be longer than 30 characters.")
-	@Column(nullable = false)
 	private String name;
 
 	@Lob
 	@NotBlank(message = "The description must no be null, empty or blank.")
-	@Column(nullable = false)
 	private String description;
 
 	@NotNull
-	@Column(nullable = false)
 	private String photoUrl;
 
 	@NotNull(message = "Price must not be null and greater than 0.")
-	@Column(nullable = false)
 	@DecimalMin(value = "0.1", message = "Price must be greater than 0.")
 	private Double price;
 
 	@OneToMany(mappedBy = "pizza")
 	private List<SpecialOffer> specialOffers;
+
+	@ManyToMany
+	@JoinTable(name = "ingredient_pizza", joinColumns = @JoinColumn(name = "pizza_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+	private List<Ingredient> ingredients;
 
 	// Methods
 	public String getDescription() {
@@ -93,6 +95,14 @@ public class Pizza {
 
 	public void setSpecialOffers(List<SpecialOffer> specialOffers) {
 		this.specialOffers = specialOffers;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return this.ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> value) {
+		this.ingredients = value;
 	}
 
 	@Override

@@ -2,14 +2,16 @@ package org.lessons.java.spring_la_mia_pizzeria_crud.models;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -31,18 +33,15 @@ public class SpecialOffer {
 
     @NotBlank(message = "The Title must not be null, empty or blank.")
     @Size(max = 50, message = "The Title must not be longer than 50 characters.")
-    @Column(nullable = false)
     private String title;
 
     @Lob
     private String description;
 
     @NotNull(message = "Starting date of the offer must not be null.")
-    @Column(nullable = false)
     private LocalDate startingDate;
 
     @NotNull(message = "Ending date of the offer must not be null.")
-    @Column(nullable = false)
     @FutureOrPresent(message = "The offer cannot end in the past.")
     private LocalDate endingDate;
 
