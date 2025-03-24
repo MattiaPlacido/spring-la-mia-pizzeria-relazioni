@@ -1,5 +1,6 @@
 package org.lessons.java.spring_la_mia_pizzeria_crud.controllers;
 
+import org.lessons.java.spring_la_mia_pizzeria_crud.repos.IngredientRepository;
 import org.lessons.java.spring_la_mia_pizzeria_crud.repos.PizzaRepository;
 import org.lessons.java.spring_la_mia_pizzeria_crud.repos.SpecialOfferRepository;
 
@@ -31,6 +32,9 @@ public class PizzaController {
     @Autowired
     private SpecialOfferRepository offersRepo;
 
+    @Autowired
+    private IngredientRepository ingredientsRepo;
+
     @GetMapping("")
     public String index(@RequestParam(name = "search", required = false) String search, Model model) {
         List<Pizza> pizzas;
@@ -55,12 +59,14 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredients", ingredientsRepo.findAll());
         return "pizzas/create";
     }
 
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza newPizza, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("ingredients", ingredientsRepo.findAll());
             return "pizzas/create";
         }
 
@@ -72,12 +78,14 @@ public class PizzaController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         model.addAttribute("pizza", repo.findById(id).get());
+        model.addAttribute("ingredients", ingredientsRepo.findAll());
         return "pizzas/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@Valid @ModelAttribute("pizza") Pizza updatedPizza, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("ingredients", ingredientsRepo.findAll());
             return "pizzas/edit";
         }
 
